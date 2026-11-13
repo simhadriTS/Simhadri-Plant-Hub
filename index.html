@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NTPC Simhadri · Plant Hub</title>
+<meta name="description" content="NTPC Simhadri Plant Hub — Plant Guide (locations, road routes, land boundaries) and Area Owner Finder (custodial assets and owner contacts) in one app.">
+<meta name="theme-color" content="#0e2e66">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Plant Hub">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0e2e66;--navy2:#163f86;--blue:#0b4a8b;--sky:#2f7ad8;--gold:#ffc43d;
+  --bg:#eef2f6;--card:#ffffff;--ink:#14202b;--muted:#5a6872;--line:#d9e0e8;
+  --g1:#0b4a8b;--g1s:#e3edf8;--g2:#1f7a4d;--g2s:#e3f2ea;
+  --display:"IBM Plex Sans Condensed",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#141e30;--ink:#e8eef7;--muted:#97a6bb;--line:#26324a;--g1s:#17304f;--g2s:#143326;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--display);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;
+  background:radial-gradient(120% 90% at 85% 0%,#2a64b8 0%,rgba(42,100,184,0) 55%),linear-gradient(165deg,var(--navy2) 0%,var(--navy) 70%);
+  padding:calc(env(safe-area-inset-top,0px) + 22px) 20px 70px}
+.hero::before{content:"";position:absolute;inset:0;opacity:.13;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
+  background-size:28px 28px;mask-image:linear-gradient(180deg,#000 0%,transparent 95%);-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 95%)}
+.hero svg.contour{position:absolute;right:-60px;top:-30px;width:340px;opacity:.18;pointer-events:none}
+.wrap{max-width:860px;margin:0 auto;position:relative}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{background:#fff;border-radius:14px;padding:8px 12px;box-shadow:0 6px 20px rgba(0,0,0,.25);flex:0 0 auto}
+.logo img{display:block;height:46px;width:auto}
+.org{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#bcd0f0}
+.org b{color:var(--gold);font-weight:600}
+h1{margin:4px 0 0;font-size:30px;line-height:1.05;font-weight:700;letter-spacing:-.01em}
+.tag{margin:18px 0 0;font-size:16px;line-height:1.4;color:#dbe6f7;max-width:34ch}
+.strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.strip span{font:500 11px var(--mono);letter-spacing:.04em;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 10px;white-space:nowrap}
+
+/* ---------- module cards ---------- */
+main{padding:0 16px 28px;margin-top:-46px;position:relative}
+.lbl{font:600 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 4px 10px}
+.hero + main .lbl{color:#cfdcf2;position:relative}
+.grid{display:grid;gap:14px}
+@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+.mod{--c:var(--g1);--cs:var(--g1s);position:relative;display:flex;flex-direction:column;background:var(--card);border-radius:20px;text-decoration:none;color:inherit;overflow:hidden;
+  box-shadow:0 1px 2px rgba(16,32,64,.06),0 10px 30px rgba(16,32,64,.12);border:1px solid var(--line);transition:transform .18s ease,box-shadow .18s ease}
+.mod.owner{--c:var(--g2);--cs:var(--g2s)}
+.mod:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(16,32,64,.08),0 18px 40px rgba(16,32,64,.18)}
+.mod:active{transform:scale(.985)}
+.mod:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.art{position:relative;height:132px;background:var(--cs);overflow:hidden;border-bottom:1px solid var(--line)}
+.art svg{position:absolute;inset:0;width:100%;height:100%}
+.num{position:absolute;left:16px;top:14px;font:600 11px var(--mono);letter-spacing:.12em;color:var(--c);background:var(--card);border-radius:20px;padding:4px 9px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.last{position:absolute;right:14px;top:14px;font:600 10.5px var(--mono);letter-spacing:.06em;color:#fff;background:var(--c);border-radius:20px;padding:4px 9px;display:none}
+.mod.is-last .last{display:block}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.ttl{display:flex;align-items:center;gap:12px}
+.ico{width:44px;height:44px;border-radius:12px;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 4px 12px color-mix(in srgb,var(--c) 40%,transparent)}
+.ico svg{width:24px;height:24px}
+.ttl h2{margin:0;font-size:21px;line-height:1.1;font-weight:700}
+.ttl p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.desc{margin:0;font-size:14.5px;line-height:1.45;color:var(--ink);opacity:.88}
+.stats{display:flex;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stats div{flex:1;padding:8px 10px;border-left:1px solid var(--line)}
+.stats div:first-child{border-left:none}
+.stats b{display:block;font:600 19px var(--mono);color:var(--c);font-variant-numeric:tabular-nums}
+.stats small{font-size:11.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:12px;font-weight:500;color:var(--c);background:var(--cs);border-radius:7px;padding:4px 8px}
+.go{margin-top:auto;display:flex;align-items:center;justify-content:space-between;background:var(--c);color:#fff;border-radius:12px;padding:12px 14px;font-weight:600;font-size:15.5px}
+.go svg{width:20px;height:20px;transition:transform .18s}
+.mod:hover .go svg{transform:translateX(4px)}
+
+/* ---------- utility row ---------- */
+.util{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-top:16px}
+.tile{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:13.5px}
+.tile .dot{width:10px;height:10px;border-radius:50%;background:#1f7a4d;box-shadow:0 0 0 4px rgba(31,122,77,.15);flex:0 0 auto}
+.tile.off .dot{background:#b25a00;box-shadow:0 0 0 4px rgba(178,90,0,.15)}
+.tile b{font-weight:600}
+.tile .sub{color:var(--muted);font-size:12px}
+.tile button{margin-left:auto;font:600 13px var(--display);border:none;background:var(--navy);color:#fff;border-radius:9px;padding:8px 12px;cursor:pointer}
+#installTile[hidden]{display:none}
+
+footer{text-align:center;color:var(--muted);font:500 11px var(--mono);letter-spacing:.06em;padding:8px 16px calc(env(safe-area-inset-bottom,0px) + 22px);line-height:1.7}
+footer b{color:var(--ink);font-weight:600}
+
+/* entrance */
+@media (prefers-reduced-motion:no-preference){
+  .brand,.tag,.strip{animation:up .5s ease both}.tag{animation-delay:.05s}.strip{animation-delay:.1s}
+  .mod{animation:up .55s cubic-bezier(.2,.7,.2,1) both}.mod:nth-child(2){animation-delay:.08s}
+  .route{stroke-dasharray:6 7;animation:dash 1.6s linear infinite}
+  .pulse{transform-origin:center;transform-box:fill-box;animation:pulse 2s ease-out infinite}
+}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes dash{to{stroke-dashoffset:-26}}
+@keyframes pulse{0%{transform:scale(.6);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+
+/* loading veil when leaving */
+.veil{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+.veil.on{opacity:1}
+.veil div{width:34px;height:34px;border:3px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="contour" viewBox="0 0 200 200" fill="none" stroke="#fff" stroke-width="1"><circle cx="100" cy="100" r="30"/><circle cx="100" cy="100" r="48"/><circle cx="100" cy="100" r="66"/><circle cx="100" cy="100" r="84"/><circle cx="100" cy="100" r="99"/></svg>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo"><img src="icons/simhadri-logo.png" alt="Simhadri"></div>
+      <div>
+        <div class="org">NTPC Limited · <b>Simhadri STPS</b></div>
+        <h1>Plant Hub</h1>
+      </div>
+    </div>
+    <p class="tag">Find any place in the plant and township, and the officer who owns each area — all in one app.</p>
+    <div class="strip"><span>2025 MW</span><span>4×500 MW + 25 MW FSPV</span><span>Paravada · Visakhapatnam</span></div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="lbl">Choose an application</div>
+    <div class="grid">
+
+      <!-- ===== Plant Guide ===== -->
+      <a class="mod guide" href="guide/" data-app="guide">
+        <div class="art" aria-hidden="true">
+          <svg viewBox="0 0 400 132" preserveAspectRatio="xMidYMid slice">
+            <defs><pattern id="pg" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#0b4a8b" stroke-opacity=".08"/></pattern></defs>
+            <rect width="400" height="132" fill="url(#pg)"/>
+            <path d="M-10 100 C60 70 90 120 160 92 S260 30 330 60 S400 40 420 30" stroke="#0b4a8b" stroke-opacity=".12" stroke-width="22" fill="none" stroke-linecap="round"/>
+            <path d="M40 30 h70 v40 h-70z M250 82 h60 v34 h-60z M150 20 h44 v26 h-44z M330 14 h50 v30 h-50z" fill="#0b4a8b" fill-opacity=".09"/>
+            <path class="route" d="M70 104 C120 104 120 60 170 60 S240 96 290 70 S330 40 352 40" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <circle cx="70" cy="104" r="9" fill="#c2410c" stroke="#fff" stroke-width="3"/><text x="70" y="108" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">A</text>
+            <circle class="pulse" cx="352" cy="40" r="10" fill="#0f766e"/>
+            <circle cx="352" cy="40" r="9" fill="#0f766e" stroke="#fff" stroke-width="3"/><text x="352" y="44" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">B</text>
+          </svg>
+          <span class="num">01 · NAVIGATE</span><span class="last">LAST USED</span>
+        </div>
+        <div class="body">
+          <div class="ttl">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></div>
+            <div><h2>Plant Guide</h2><p>Locations · Routes · Land</p></div>
+          </div>
+          <p class="desc">Search plant and township locations, get road routes with distance and turn-by-turn guidance, and see NTPC land boundaries live.</p>
+          <div class="stats"><div><b id="sLoc">110</b><small>Locations</small></div><div><b id="sLand">79</b><small>Land features</small></div><div><b>A→B</b><small>Road routes</small></div></div>
+          <div class="chips"><span>Live directions</span><span>Google route view</span><span>On-NTPC-land alert</span></div>
+          <div class="go">Open Plant Guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- ===== Area Owner Finder ===== -->
+      <a class="mod owner" href="owner/" data-app="owner">
+        <div class="art" aria-hidden="true">
+          <svg viewBox="0 0 400 132" preserveAspectRatio="xMidYMid slice">
+            <defs><pattern id="po" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#1f7a4d" stroke-opacity=".08"/></pattern></defs>
+            <rect width="400" height="132" fill="url(#po)"/>
+            <path d="M40 24 h90 v52 h-90z" fill="#1f7a4d" fill-opacity=".10" stroke="#1f7a4d" stroke-opacity=".5" stroke-width="2" stroke-dasharray="5 4"/>
+            <path d="M150 64 l70 -14 l22 50 l-80 14z" fill="#1f7a4d" fill-opacity=".16" stroke="#1f7a4d" stroke-width="2.5"/>
+            <path d="M270 22 h70 v40 h-70z M262 80 h96 v36 h-96z" fill="#b25a00" fill-opacity=".10" stroke="#b25a00" stroke-opacity=".5" stroke-width="2" stroke-dasharray="5 4"/>
+            <g transform="translate(196 34)">
+              <circle class="pulse" cx="0" cy="40" r="10" fill="#1f7a4d"/>
+              <path d="M0 44 C-14 26 -16 18 -16 12 a16 16 0 0 1 32 0 c0 6 -2 14 -16 32z" fill="#1f7a4d" stroke="#fff" stroke-width="3"/>
+              <circle cx="0" cy="12" r="5" fill="#fff"/>
+            </g>
+            <g transform="translate(286 26)" font-family="sans-serif">
+              <rect x="0" y="0" width="96" height="44" rx="9" fill="#fff" stroke="#1f7a4d" stroke-opacity=".3"/>
+              <circle cx="17" cy="22" r="10" fill="#1f7a4d" fill-opacity=".18"/><circle cx="17" cy="19" r="4" fill="#1f7a4d"/><path d="M10 29 a7 6 0 0 1 14 0" fill="#1f7a4d"/>
+              <rect x="33" y="13" width="50" height="6" rx="3" fill="#1f7a4d" fill-opacity=".6"/><rect x="33" y="25" width="36" height="5" rx="2.5" fill="#1f7a4d" fill-opacity=".25"/>
+            </g>
+          </svg>
+          <span class="num">02 · IDENTIFY</span><span class="last">LAST USED</span>
+        </div>
+        <div class="body">
+          <div class="ttl">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9" r="2.4"/><path d="M8.2 14.6a4.6 4.6 0 0 1 7.6 0"/></svg></div>
+            <div><h2>Area Owner Finder</h2><p>Assets · Owners · Contacts</p></div>
+          </div>
+          <p class="desc">Identify the custodial asset you are standing in by GPS and reach its Area Owner instantly — tap to call or email.</p>
+          <div class="stats"><div><b>360</b><small>Assets</small></div><div><b>317</b><small>GPS-mapped</small></div><div><b>Live</b><small>Admin sync</small></div></div>
+          <div class="chips"><span>Where am I?</span><span>Tap-to-call / email</span><span>In-app directions</span></div>
+          <div class="go">Open Area Owner Finder <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="util">
+      <div class="tile" id="netTile"><span class="dot"></span><div><b id="netT">Online</b><div class="sub" id="netS">Maps, routes and live updates available</div></div></div>
+      <div class="tile" id="installTile" hidden><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><div><b>Install Plant Hub</b><div class="sub">Add to your home screen</div></div><button id="installBtn" type="button">Install</button></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <b>NTPC Simhadri · Planning &amp; Services</b><br>
+  Plant Hub v1.0 · Plant Guide v1.6 · Area Owner Finder
+</footer>
+
+<div class="veil" id="veil"><div></div></div>
+
+<script>
+(()=>{
+  const K='plantHub.last';
+  // Highlight last-used module
+  try{const last=localStorage.getItem(K);if(last){const el=document.querySelector(`.mod[data-app="${last}"]`);if(el)el.classList.add('is-last');}}catch(e){}
+  document.querySelectorAll('.mod').forEach(a=>a.addEventListener('click',()=>{
+    try{localStorage.setItem(K,a.dataset.app)}catch(e){}
+    document.getElementById('veil').classList.add('on');
+  }));
+  // Clear veil when returning via back/forward cache
+  addEventListener('pageshow',()=>document.getElementById('veil').classList.remove('on'));
+
+  // Live counts from the Plant Guide data files
+  if(location.protocol!=='file:'){
+    fetch('guide/data/locations.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.locs)document.getElementById('sLoc').textContent=d.locs.length;}).catch(()=>{});
+    fetch('guide/data/land.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.land)document.getElementById('sLand').textContent=d.land.length;}).catch(()=>{});
+  }
+
+  // Network status
+  const net=()=>{const on=navigator.onLine,t=document.getElementById('netTile');t.classList.toggle('off',!on);
+    document.getElementById('netT').textContent=on?'Online':'Offline';
+    document.getElementById('netS').textContent=on?'Maps, routes and live updates available':'Saved data and previously viewed map areas only';};
+  addEventListener('online',net);addEventListener('offline',net);net();
+
+  // Install prompt
+  let deferred=null;
+  addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;document.getElementById('installTile').hidden=false;});
+  document.getElementById('installBtn').addEventListener('click',async()=>{if(!deferred)return;deferred.prompt();await deferred.userChoice.catch(()=>{});deferred=null;document.getElementById('installTile').hidden=true;});
+  addEventListener('appinstalled',()=>{document.getElementById('installTile').hidden=true;});
+
+  if('serviceWorker' in navigator&&location.protocol!=='file:'){addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}));}
+})();
+</script>
+</body>
+</html>
